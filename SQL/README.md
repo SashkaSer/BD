@@ -35,12 +35,12 @@ services:
 ### Задача 2
 
 * Список БД
-![DBlist](https://github.com/SashkaSer/BD/blob/main/SQL/img/DBlist.png)
+![DBlist](https://github.com/SashkaSer/BD/blob/main/SQL/img/DBlist.png)  
 
 * Описание таблиц
-![Tables](https://github.com/SashkaSer/BD/blob/main/SQL/img/tables.png)
+![Tables](https://github.com/SashkaSer/BD/blob/main/SQL/img/tables.png)  
 
-* SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
+* SQL-запрос для выдачи списка пользователей с правами над таблицами test_db  
 *SELECT grantee, privilege_type, table_name FROM information_schema.role_table_grants WHERE table_name IN ('orders', 'clients');*
 
 Права над таблицами
