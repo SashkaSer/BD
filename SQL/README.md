@@ -56,7 +56,7 @@ services:
 
 ### Задание 4
 
-SQL команды для свзяи таблиц по fk
+SQL команды для свзяи таблиц по fk  
 *UPDATE clients SET заказ=(SELECT id FROM orders WHERE name='Книга') WHERE surname='Иванов Иван Иванович';*
 *UPDATE clients SET заказ=(SELECT id FROM orders WHERE name='Монитор') WHERE surname='Петров Петр Петрович';*
 *UPDATE clients SET заказ=(SELECT id FROM orders WHERE name='Гитара') WHERE surname='Иоганн Себастьян Бах';*
