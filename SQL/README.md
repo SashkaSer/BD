@@ -49,4 +49,7 @@ services:
 ### Задание 3
 
 Содержимое таблиц после заполнения  
-![Tables](https://github.com/SashkaSer/BD/blob/main/SQL/img/tables2.png)
+![Tables](https://github.com/SashkaSer/BD/blob/main/SQL/img/tables2.png)  
+
+Количество строк в таблицах  
+![count](https://github.com/SashkaSer/BD/blob/main/SQL/img/count.png)
