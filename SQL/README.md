@@ -81,5 +81,5 @@ SQL команды для свзяи таблиц по fk
 ![restore2](https://github.com/SashkaSer/BD/blob/main/SQL/img/restore2.png)  
 
 Просмотр данных после восстановления  
-![restore3](https://github.com/SashkaSer/BD/blob/main/SQL/img/restore_result.png)
+![restore3](https://github.com/SashkaSer/BD/blob/main/SQL/img/restore_result2.png)
 
