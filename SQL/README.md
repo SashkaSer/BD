@@ -71,3 +71,15 @@ SQL команды для свзяи таблиц по fk
 ![explain](https://github.com/SashkaSer/BD/blob/main/SQL/img/explain.png)
 
 В нашем случае используется Seq Scan последовательное чтение данных блок за блоком. Cost затратность операции, первое значение - затраты на получение первой строки, второе - затраты на получение всех строк в таблице. Rows - реальное количество строк, полученное при опирации Seq Scan, Widht - средний размер одной строки в байтах. Filter - условие вывода - выводятся все строки где "заказ" IS NOT NULL
+
+### Задание 6
+
+Создание бэкапа БД test_db и восстановление
+![backup](https://github.com/SashkaSer/BD/blob/main/SQL/img/restore.png)  
+
+Забыл создать БД, из-за этого ошибки  
+![restore2](https://github.com/SashkaSer/BD/blob/main/SQL/img/restore2.png)  
+
+Просмотр данных после восстановления  
+![restore3](https://github.com/SashkaSer/BD/blob/main/SQL/img/restore_result.png)
+
