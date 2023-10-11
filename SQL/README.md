@@ -44,4 +44,9 @@ services:
 *SELECT grantee, privilege_type, table_name FROM information_schema.role_table_grants WHERE table_name IN ('orders', 'clients');*
 
 Права над таблицами  
-![Grants](https://github.com/SashkaSer/BD/blob/main/SQL/img/grants.png)
+![Grants](https://github.com/SashkaSer/BD/blob/main/SQL/img/grants.png)  
+
+### Задание 3
+
+Содержимое таблиц после заполнения  
+![Tables](https://github.com/SashkaSer/BD/blob/main/SQL/img/tables2.png)
