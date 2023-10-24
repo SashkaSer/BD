@@ -61,34 +61,70 @@ test_database=# SELECT attname, avg_width FROM pg_stats WHERE tablename = 'order
 Шардирование таблицы orders на orders_1 - price>499 и orders_2 - price<=499
 
 ```sql
-BEGIN;
-ALTER TABLE orders RENAME TO orders_old;
+begin;
 
-CREATE TABLE orders (
-    like public.orders_old INCLUDING ALL
-)
+  alter table orders rename to orders_old;
+ 
+  create table orders (
+      like orders_old
+  );
+  
+  create table orders_after_500 (
+      check (price>499)
+  ) inherits (orders);
 
-CREATE TABLE orders_after_499 (
-    CHECK (price>499)
-    INHERITS (orders)
-)
+  create table orders_before_500 (
+      check (price<=499)
+  ) inherits (orders);
 
-CREATE TABLE orders_before_499 (
-    CHECK (price<=499)
-    INHERITS (orders)
-)
+  create rule orders_after_500 as on insert to orders
+  where (price>499)
+  do instead insert into orders_after_500 values(NEW.*);
 
-CREATE RULE orders_after_499 AS ON INSERT TO orders
-WHERE (price>499)
-DO INSTEAD INSERT INTO orders_after_499 VALUES (NEW.*)
+  create rule orders_before_500 as on insert to orders
+  where (price<=499)
+  do instead insert into orders_before_500 values(NEW.*);
 
-CREATE RULE orders_before_499 AS ON INSERT TO orders
-WHERE (price<=499)
-DO INSTEAD INSERT INTO orders_before_499 VALUES (NEW.*)
+  insert into orders (id,title,price) select id,title,price from orders_old;
 
-INSERT INTO orders (id, title, price) SELECT id, titile, price FROM orders_old;
-
-DROP TABLE orders_old
+  drop table orders_old;
+end;
 
 END;
 ```
+
+Проверка
+
+```sql
+test_database=# \dt
+               List of relations
+ Schema |       Name        | Type  |  Owner   
+--------+-------------------+-------+----------
+ public | orders            | table | postgres
+ public | orders_after_500  | table | postgres
+ public | orders_before_500 | table | postgres
+(3 rows)
+
+test_database=# SELECT * from orders_before_500;
+ id |        title         | price 
+----+----------------------+-------
+  1 | War and peace        |   100
+  3 | Adventure psql time  |   300
+  4 | Server gravity falls |   300
+  5 | Log gossips          |   123
+  7 | Me and my bash-pet   |   499
+(5 rows)
+
+test_database=# SELECT * from orders_after_500;
+ id |       title        | price 
+----+--------------------+-------
+  2 | My little database |   500
+  6 | WAL never lies     |   900
+  8 | Dbiezdmin          |   501
+(3 rows)
+
+test_database=# 
+```
+Вставка данных для проверки
+
+![backup](https://github.com/SashkaSer/BD/blob/main/PostgreSQL/img/checking2.png)  
