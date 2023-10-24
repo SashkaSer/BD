@@ -7,18 +7,22 @@
 \l[+]   [PATTERN]      list databasesdt
 ```
 #### подключения к БД
+```sql
 \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}
                          connect to new database (currently "postgres")
-
+```
 #### вывода списка таблиц
+```sql
 \dt[S+] [PATTERN]      list tables
-
+```
 #### вывода описания содержимого таблиц
+```sql
 \d[S+]  NAME           describe table, view, sequence, or index
-
+```
 #### Выход из SQL
+```sql
 \q                     quit psql
-
+```
 
 ### Задание 2
 
