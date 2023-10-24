@@ -6,16 +6,16 @@
 ```sql
 \l[+]   [PATTERN]      list databasesdt
 ```
-#### подключения к БД
+#### Подключения к БД
 ```sql
 \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}
                          connect to new database (currently "postgres")
 ```
-#### вывода списка таблиц
+#### Вывода списка таблиц
 ```sql
 \dt[S+] [PATTERN]      list tables
 ```
-#### вывода описания содержимого таблиц
+#### Вывода описания содержимого таблиц
 ```sql
 \d[S+]  NAME           describe table, view, sequence, or index
 ```
@@ -40,7 +40,6 @@ test_database=# \dt
 ```
 
 ANALYZE таблицы orders
-
 ```sql
 test_database=# ANALYZE VERBOSE orders;
 INFO:  analyzing "public.orders"
@@ -49,3 +48,47 @@ ANALYZE
 test_database=# 
 ```
 
+столбец таблицы orders с наибольшим средним значением размера элементов в байтах.
+```sql
+test_database=# SELECT attname, avg_width FROM pg_stats WHERE tablename = 'orders' order by avg_width desc limit 1;
+ attname | avg_width 
+---------+-----------
+ title   |        16
+(1 row)
+```
+### Задание 3 
+
+Шардирование таблицы orders на orders_1 - price>499 и orders_2 - price<=499
+
+```sql
+BEGIN;
+ALTER TABLE orders RENAME TO orders_old;
+
+CREATE TABLE orders (
+    like public.orders_old INCLUDING ALL
+)
+
+CREATE TABLE orders_after_499 (
+    CHECK (price>499)
+    INHERITS (orders)
+)
+
+CREATE TABLE orders_before_499 (
+    CHECK (price<=499)
+    INHERITS (orders)
+)
+
+CREATE RULE orders_after_499 AS ON INSERT TO orders
+WHERE (price>499)
+DO INSTEAD INSERT INTO orders_after_499 VALUES (NEW.*)
+
+CREATE RULE orders_before_499 AS ON INSERT TO orders
+WHERE (price<=499)
+DO INSTEAD INSERT INTO orders_before_499 VALUES (NEW.*)
+
+INSERT INTO orders (id, title, price) SELECT id, titile, price FROM orders_old;
+
+DROP TABLE orders_old
+
+END;
+```
