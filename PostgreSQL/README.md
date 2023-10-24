@@ -22,7 +22,17 @@
 ### Задание 2
 
 Восстановленный бэкап БД
-![backup](https://github.com/SashkaSer/BD/blob/main/PostgreSQL/img/backup.png)  
+```sql
+postgres=# \c test_database 
+psql (13.11, server 13.12 (Debian 13.12-1.pgdg120+1))
+You are now connected to database "test_database" as user "postgres".
+test_database=# \dt
+         List of relations
+ Schema |  Name  | Type  |  Owner   
+--------+--------+-------+----------
+ public | orders | table | postgres
+(1 row)
+```
 
 ANALYZE таблицы orders
 
