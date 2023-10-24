@@ -3,8 +3,9 @@
 ### Задание 1
 
 #### Вывод списка БД
+```sql
 \l[+]   [PATTERN]      list databasesdt
-
+```
 #### подключения к БД
 \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}
                          connect to new database (currently "postgres")
