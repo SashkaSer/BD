@@ -128,3 +128,26 @@ test_database=#
 Вставка данных для проверки
 
 ![backup](https://github.com/SashkaSer/BD/blob/main/PostgreSQL/img/checking2.png)  
+
+Ручное разбиение можно исключить при изначальном создании таблицы с учетом шардирования
+
+### Задание 4
+
+```sql
+[sasha@localhost postgresql]$ pg_dump -h 127.0.0.1 -p 5432 -U postgres test_database > test_database.dump
+Password: 
+[sasha@localhost postgresql]$ ls -lah
+total 20K
+drwxr-xr-x.  3 sasha            sasha   91 Oct 25 01:59 .
+drwx------. 22 sasha            sasha 4.0K Oct 19 23:11 ..
+drwx------. 19 systemd-coredump sasha 4.0K Oct 25 01:24 data
+-rw-r--r--.  1 sasha            sasha  310 Oct 25 00:20 docker-compose.yml
+-rw-r--r--.  1 sasha            sasha 2.6K Oct 25 01:59 test_database.dump
+-rw-r--r--.  1 sasha            sasha 2.1K Oct 24 22:29 test_dump.sql
+[sasha@localhost postgresql]$ 
+```
+
+Уникалььность значение столбца title можно достичь наложением ограничения уникальности
+```sql
+ALTER TABLE orders ADD CONSTRAINT unique_title UNIQUE (title);
+```
