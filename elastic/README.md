@@ -82,3 +82,37 @@ yellow open   ind-2            u9qVuhixRse93Jt3FyZhrA   2   1          0        
 }
 [sasha@localhost Elastic]$ 
 ```
+
+Состояние кластера
+```sql
+[sasha@localhost Elastic]$ curl -X GET localhost:9200/_cluster/health/?pretty
+{
+  "cluster_name" : "sasha-cluster",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 8,
+  "active_shards" : 8,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 10,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 44.44444444444444
+}
+```
+
+Индексы находятся в желотом статусе, так как их попросту некуда реплицировать, имеем всего одну ноду Эластика
+
+Удаление индексов
+```sql
+[sasha@localhost Elastic]$ curl -X DELETE http://localhost:9200/ind-1
+{"acknowledged":true}
+[sasha@localhost Elastic]$ curl -X DELETE http://localhost:9200/ind-2
+{"acknowledged":true}
+[sasha@localhost Elastic]$ curl -X DELETE http://localhost:9200/ind-3
+{"acknowledged":true}
+```
